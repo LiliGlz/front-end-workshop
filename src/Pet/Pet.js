@@ -1,30 +1,52 @@
-console.log(version);
-console.log(name);
-console.log(buildCard);
-// console.log(otherVar); throw an error
+var pets = [
+  {
+    name: 'Benito',
+    details: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad eum dolorum architecto obcaecati enim dicta praesentium, quam nobis! Neque ad aliquam facilis numquam. Veritatis, sit.',
+    'id-pet': 1
+  },
+  {
+    name: 'Felipe',
+    details: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad eum dolorum architecto obcaecati enim dicta praesentium, quam nobis! Neque ad aliquam facilis numquam. Veritatis, sit.',
+    'id-pet': 2
+  },
+  {
+    name: 'Remmy',
+    details: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad eum dolorum architecto obcaecati enim dicta praesentium, quam nobis! Neque ad aliquam facilis numquam. Veritatis, sit.',
+    'id-pet': 3
+  },
+  {
+    name: 'Claudio',
+    details: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad eum dolorum architecto obcaecati enim dicta praesentium, quam nobis! Neque ad aliquam facilis numquam. Veritatis, sit.',
+    'id-pet': 4
+  },
+  {
+    name: 'Shisha',
+    details: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad eum dolorum architecto obcaecati enim dicta praesentium, quam nobis! Neque ad aliquam facilis numquam. Veritatis, sit.',
+    'id-pet': 5
+  },
+  {
+    name: 'Brandon',
+    details: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad eum dolorum architecto obcaecati enim dicta praesentium, quam nobis! Neque ad aliquam facilis numquam. Veritatis, sit.',
+    'id-pet': 6
+  },
+];
 
-var name = 'Benito';
-var details = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad eum dolorum architecto obcaecati enim dicta praesentium, quam nobis! Neque ad aliquam facilis numquam. Veritatis, sit.';
+var templates = [];
 
-var benitoTemplate = buildCard(name, details);
+for(var i = 0; i < pets.length; i++) {
+  var id = (pets[i]['id-pet'] + '-' + i * 2) + '-' + ('-' + i%2 === 0);
+  // '-' + i%2 === 0 associativity
+  templates.push(buildCard(id, pets[i].name, pets[i].details));
+}
 
-console.log(benitoTemplate);
+console.log(templates);
 
-function buildCard(name, details) {
+function buildCard(id, name, details) {
   var name = name.toLowerCase();
 
-  return (
-    '<article class="yta_Adopt-card">' +
-      buildImage() +
-      '<div class="yta_Adopt-card-description">' +
-        '<h3 class="yta_Adopt-card-description-name">' + name + '</h3>' +
-        '<p class="yta_Adopt-card-description-details">' + details + '</p>' +
-        buildLink() +
-      '</div>' +
-    '</article>'
-  );
+  // console.log(buildLink()); throw an error since it is undefined for the hoisting phase
 
-  function buildLink() {
+  var buildLink = function() {
     var link = '/adoptar/' + name;
 
     return (
@@ -33,8 +55,19 @@ function buildCard(name, details) {
       '</p>'
     );
   }
-}
 
-function buildImage() {
-  return '<div class="yta_Adopt-card-img" style="background-image: url(./images/' + name + '.png)"></div>';
+  var buildImage = function () {
+    return '<div class="yta_Adopt-card-img" style="background-image: url(./images/' + name + '.png)"></div>';
+  }
+  
+  return (
+    '<article class="yta_Adopt-card" id="' + id + '">' +
+      buildImage() +
+      '<div class="yta_Adopt-card-description">' +
+        '<h3 class="yta_Adopt-card-description-name">' + name + '</h3>' +
+        '<p class="yta_Adopt-card-description-details">' + details + '</p>' +
+        buildLink() +
+      '</div>' +
+    '</article>'
+  );
 }
